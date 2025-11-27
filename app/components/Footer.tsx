@@ -63,7 +63,7 @@ export default function Footer() {
           <div>
             <h4 className="font-bold mb-4">Contacto</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>infocodram@gmail.com</li>
+              <li>coderam@outlook.es</li>
               <li>+58 412-299-6916</li>
               <li>Táchira, Venezuela</li>
             </ul>
