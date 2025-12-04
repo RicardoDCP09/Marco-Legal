@@ -39,11 +39,37 @@ export default function CodeRAMPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsModalOpen(true);
     const form = e.target as HTMLFormElement;
-    form.reset();
+    const formData = new FormData(form);
+
+    const data = {
+      nombre: formData.get("nombre"),
+      email: formData.get("email"),
+      empresa: formData.get("empresa"),
+      servicio: formData.get("servicio"),
+      mensaje: formData.get("mensaje"),
+      date: new Date().toISOString(),
+      status: "pending",
+    };
+
+    try {
+      await fetch("http://localhost:3001/proposals", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      setIsModalOpen(true);
+      form.reset();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert(
+        "Hubo un error al enviar el formulario. Por favor intenta de nuevo."
+      );
+    }
   };
 
   useEffect(() => {
@@ -52,8 +78,8 @@ export default function CodeRAMPage() {
 
   return (
     <div className="bg-gray-50 text-gray-800 font-sans">
+      <Navigation showSection={showSection} activeSection={activeSection} />
       <HeroSection scrollToSection={scrollToSection} />
-      <Navigation showSection={showSection} />
 
       <main className="max-w-6xl mx-auto px-4 py-16 space-y-24">
         <AboutSection isActive={activeSection === "sobre"} />

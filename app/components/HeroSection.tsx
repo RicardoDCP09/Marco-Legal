@@ -18,9 +18,9 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
         {/* Logo placeholder */}
         <div className="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center mb-4">
           <Image
-            src="/logo-b.png"
+            src="/LogoWhite.jpg"
             alt="Logo CodeRAM"
-            className="w-120 h-120 object-contain"
+            className="w-120 h-120 object-contain rounded-full"
             width={200}
             height={200}
           />
