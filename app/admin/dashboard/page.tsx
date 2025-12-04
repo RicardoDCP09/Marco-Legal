@@ -2,7 +2,31 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Check, X, LogOut, Clock, Mail, Building, User } from "lucide-react";
+import {
+  Check,
+  X,
+  LogOut,
+  Clock,
+  Mail,
+  Building,
+  User,
+  BarChart2,
+  PieChart as PieChartIcon,
+  FileText,
+} from "lucide-react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 
 interface Proposal {
   id: string;
@@ -16,12 +40,43 @@ interface Proposal {
   response?: string;
 }
 
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
 export default function DashboardPage() {
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [loading, setLoading] = useState(true);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
   const router = useRouter();
+
+  // Stats Calculation
+  const statusData = [
+    {
+      name: "Pendientes",
+      value: proposals.filter((p) => p.status === "pending").length,
+      color: "#EAB308",
+    },
+    {
+      name: "Aceptadas",
+      value: proposals.filter((p) => p.status === "accepted").length,
+      color: "#22C55E",
+    },
+    {
+      name: "Rechazadas",
+      value: proposals.filter((p) => p.status === "rejected").length,
+      color: "#EF4444",
+    },
+  ].filter((d) => d.value > 0);
+
+  const serviceData = proposals.reduce((acc: any[], curr) => {
+    const existing = acc.find((item) => item.name === curr.servicio);
+    if (existing) {
+      existing.value += 1;
+    } else {
+      acc.push({ name: curr.servicio, value: 1 });
+    }
+    return acc;
+  }, []);
 
   useEffect(() => {
     // Check auth
@@ -111,18 +166,83 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold text-gray-900">
             Panel Administrativo
           </h1>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 text-gray-600 hover:text-red-600 transition-colors"
-          >
-            <LogOut className="h-5 w-5" />
-            <span>Cerrar Sesión</span>
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => router.push("/admin/cms")}
+              className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
+            >
+              <FileText className="h-5 w-5" />
+              <span>Editar Contenido</span>
+            </button>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 text-gray-600 hover:text-red-600 transition-colors"
+            >
+              <LogOut className="h-5 w-5" />
+              <span>Cerrar Sesión</span>
+            </button>
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Stats Section */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              <PieChartIcon className="w-5 h-5 text-primary" />
+              Estado de Propuestas
+            </h3>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={statusData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {statusData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              <BarChart2 className="w-5 h-5 text-primary" />
+              Servicios Solicitados
+            </h3>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={serviceData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" fontSize={12} tickMargin={10} />
+                  <YAxis allowDecimals={false} />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#8884d8" radius={[4, 4, 0, 0]}>
+                    {serviceData.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-700">
             Propuestas Recientes

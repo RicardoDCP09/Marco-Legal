@@ -19,5 +19,22 @@
       "status": "accepted",
       "response": "Ok esta bien\n"
     }
+  ],
+  "content": [
+    {
+      "id": "about",
+      "title": "¿Quiénes Somos?",
+      "text": "CodeRAM se especializa en el desarrollo de sistemas administrativos, plataformas web empresariales y aplicaciones móviles personalizadas. Ofrecemos soluciones modulares, escalables y seguras para empresas que desean digitalizar su operatividad y potenciar su alcance."
+    },
+    {
+      "id": "mission",
+      "title": "Misión",
+      "text": "Desarrollar soluciones tecnológicas innovadoras, funcionales y escalables que impulsen la transformación digital de empresas y organizaciones, ofreciendo software de alta calidad adaptado al mercado venezolano y latinoamericano."
+    },
+    {
+      "id": "vision",
+      "title": "Visión",
+      "text": "Ser reconocidos como líderes en el desarrollo de software en Venezuela, destacando por nuestra creatividad, compromiso con la calidad y capacidad de generar impacto positivo en la productividad y competitividad de nuestros clientes."
+    }
   ]
 }

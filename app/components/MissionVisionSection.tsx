@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Target, Lightbulb, Award, Users, Shield } from "lucide-react";
 
 interface MissionVisionSectionProps {
@@ -7,6 +8,27 @@ interface MissionVisionSectionProps {
 export default function MissionVisionSection({
   isActive,
 }: MissionVisionSectionProps) {
+  const [mission, setMission] = useState({
+    title: "Misión",
+    text: "Desarrollar soluciones tecnológicas innovadoras, funcionales y escalables que impulsen la transformación digital de empresas y organizaciones, ofreciendo software de alta calidad adaptado al mercado venezolano y latinoamericano.",
+  });
+  const [vision, setVision] = useState({
+    title: "Visión",
+    text: "Ser reconocidos como líderes en el desarrollo de software en Venezuela, destacando por nuestra creatividad, compromiso con la calidad y capacidad de generar impacto positivo en la productividad y competitividad de nuestros clientes.",
+  });
+
+  useEffect(() => {
+    Promise.all([
+      fetch("http://localhost:3001/content/mission").then((res) => res.json()),
+      fetch("http://localhost:3001/content/vision").then((res) => res.json()),
+    ])
+      .then(([missionData, visionData]) => {
+        setMission(missionData);
+        setVision(visionData);
+      })
+      .catch((err) => console.error("Error fetching mission/vision:", err));
+  }, []);
+
   return (
     <section id="mision" className={`${isActive ? "block" : "hidden"}`}>
       <h2 className="text-4xl font-bold text-primary mb-12 text-center">
@@ -18,13 +40,10 @@ export default function MissionVisionSection({
             <div className="bg-primary/10 p-3 rounded-full mr-4">
               <Target className="w-8 h-8 text-primary" />
             </div>
-            <h3 className="text-3xl font-bold">Misión</h3>
+            <h3 className="text-3xl font-bold">{mission.title}</h3>
           </div>
           <p className="text-gray-700 text-lg leading-relaxed">
-            Desarrollar soluciones tecnológicas innovadoras, funcionales y
-            escalables que impulsen la transformación digital de empresas y
-            organizaciones, ofreciendo software de alta calidad adaptado al
-            mercado venezolano y latinoamericano.
+            {mission.text}
           </p>
         </div>
         <div className="bg-white shadow-xl rounded-xl p-8 border-t-4 border-secondary">
@@ -32,14 +51,9 @@ export default function MissionVisionSection({
             <div className="bg-primary/10 p-3 rounded-full mr-4">
               <Lightbulb className="w-8 h-8 text-primary" />
             </div>
-            <h3 className="text-3xl font-bold">Visión</h3>
+            <h3 className="text-3xl font-bold">{vision.title}</h3>
           </div>
-          <p className="text-gray-700 text-lg leading-relaxed">
-            Ser reconocidos como líderes en el desarrollo de software en
-            Venezuela, destacando por nuestra creatividad, compromiso con la
-            calidad y capacidad de generar impacto positivo en la productividad
-            y competitividad de nuestros clientes.
-          </p>
+          <p className="text-gray-700 text-lg leading-relaxed">{vision.text}</p>
         </div>
       </div>
 

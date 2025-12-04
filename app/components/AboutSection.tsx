@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Target, Zap, Shield, CheckCircle } from "lucide-react";
 
 interface AboutSectionProps {
@@ -5,17 +6,26 @@ interface AboutSectionProps {
 }
 
 export default function AboutSection({ isActive }: AboutSectionProps) {
+  const [content, setContent] = useState({
+    title: "¿Quiénes Somos?",
+    text: "CodeRAM se especializa en el desarrollo de sistemas administrativos, plataformas web empresariales y aplicaciones móviles personalizadas. Ofrecemos soluciones modulares, escalables y seguras para empresas que desean digitalizar su operatividad y potenciar su alcance.",
+  });
+
+  useEffect(() => {
+    fetch("http://localhost:3001/content/about")
+      .then((res) => res.json())
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error fetching about content:", err));
+  }, []);
+
   return (
     <section id="sobre" className={`${isActive ? "block" : "hidden"}`}>
       <div className="text-center mb-16">
         <h2 className="text-4xl font-bold text-primary mb-6">
-          ¿Quiénes Somos?
+          {content.title}
         </h2>
         <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-          CodeRAM se especializa en el desarrollo de sistemas administrativos,
-          plataformas web empresariales y aplicaciones móviles personalizadas.
-          Ofrecemos soluciones modulares, escalables y seguras para empresas que
-          desean digitalizar su operatividad y potenciar su alcance.
+          {content.text}
         </p>
       </div>
 
