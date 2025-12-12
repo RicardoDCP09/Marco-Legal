@@ -14,9 +14,12 @@ import {
   MessageSquare,
   HelpCircle,
   Mail,
+  Lock,
+  BookOpen,
   Code2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface NavigationProps {
   showSection: (id: string) => void;
@@ -39,7 +42,6 @@ export default function Navigation({
   }, []);
 
   const navItems = [
-    { id: "sobre", label: "Sobre Nosotros", icon: Info },
     { id: "mision", label: "Misión", icon: Target },
     { id: "proceso", label: "Proceso", icon: Settings },
     { id: "tecnologias", label: "Tecnologías", icon: Cpu },
@@ -48,115 +50,239 @@ export default function Navigation({
     { id: "equipo", label: "Equipo", icon: Users },
     { id: "testimonios", label: "Testimonios", icon: MessageSquare },
     { id: "faq", label: "FAQ", icon: HelpCircle },
+    { id: "blog", label: "Blog", icon: BookOpen },
     { id: "contacto", label: "Contacto", icon: Mail },
   ];
 
   const handleNavClick = (id: string) => {
+    const isHomePage = window.location.pathname === "/";
+
+    if (id === "blog") {
+      window.location.href = "/blog";
+      return;
+    }
+
+    if (!isHomePage) {
+      window.location.href = `/#${id}`;
+      return;
+    }
+
     showSection(id);
     setIsOpen(false);
   };
 
-  return (
-    <nav
-      className={cn(
-        "sticky top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
-        scrolled || isOpen
-          ? "bg-white/80 backdrop-blur-md shadow-sm border-gray-200/50"
-          : "bg-white/80 backdrop-blur-md shadow-sm"
-      )}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div
-            className="flex-shrink-0 flex items-center gap-2 cursor-pointer"
-            onClick={() => showSection("sobre")}
-          >
-            <div className="bg-primary/10 p-2 rounded-lg">
-              <Code2 className="h-6 w-6 text-primary" />
-            </div>
-            <span className="font-bold text-xl tracking-tight text-gray-900">
-              CodeRAM
-            </span>
-          </div>
+  // Menu Animation Variants
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      x: "100%",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 40,
+      },
+    },
+    open: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
+      },
+    },
+  };
 
-          {/* Desktop Menu */}
-          <div className="hidden xl:block">
-            <div className="ml-10 flex items-baseline space-x-1">
+  const itemVariants = {
+    closed: { opacity: 0, x: 20 },
+    open: { opacity: 1, x: 0 },
+  };
+
+  return (
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className={cn(
+          "sticky top-0 left-0 right-0 z-50 transition-all duration-300",
+          scrolled || isOpen
+            ? "bg-white/90 backdrop-blur-xl shadow-md border-b border-gray-200/50"
+            : "bg-white/90 backdrop-blur-xl shadow-md border-b border-gray-200/50"
+        )}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex-shrink-0 flex items-center gap-2 cursor-pointer"
+              onClick={() => showSection("sobre")}
+            >
+              <div className="bg-gradient-to-br from-primary to-blue-600 p-2.5 rounded-xl shadow-lg shadow-primary/20 text-white">
+                <Code2 className="h-6 w-6" />
+              </div>
+              <span className="font-bold text-xl tracking-tight text-gray-900">
+                CodeRAM
+              </span>
+            </motion.div>
+
+            {/* Desktop Menu */}
+            <div className="hidden 2xl:flex items-center gap-1">
               {navItems.map((item) => {
-                const Icon = item.icon;
                 const isActive = activeSection === item.id;
+                const Icon = item.icon;
                 return (
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item.id)}
                     className={cn(
-                      "px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-1.5 group",
+                      "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 group",
                       isActive
-                        ? "text-primary bg-primary/10"
+                        ? "text-primary"
                         : "text-gray-600 hover:text-primary hover:bg-gray-50"
                     )}
                   >
-                    <Icon
-                      className={cn(
-                        "w-4 h-4 transition-transform group-hover:scale-110",
-                        isActive && "scale-110"
-                      )}
-                    />
-                    {item.label}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeNav"
+                        className="absolute inset-0 bg-primary/10 rounded-lg -z-10"
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 30,
+                        }}
+                      />
+                    )}
+                    <Icon className="w-4 h-4" />
+                    <span>{item.label}</span>
                   </button>
                 );
               })}
+
+              <div className="w-px h-6 bg-gray-200 mx-2" />
+
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="/admin/login"
+                className="p-2 rounded-full text-gray-500 hover:text-primary hover:bg-blue-50 transition-colors"
+                title="Acceso Administrativo"
+              >
+                <Lock className="w-5 h-5" />
+              </motion.a>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="2xl:hidden">
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setIsOpen(!isOpen)}
+                className="inline-flex items-center justify-center p-2.5 rounded-xl text-gray-700 hover:text-primary hover:bg-gray-100 focus:outline-none transition-colors border border-gray-200/50 bg-white/50 backdrop-blur-sm"
+              >
+                <AnimatePresence mode="wait">
+                  {isOpen ? (
+                    <motion.div
+                      key="close"
+                      initial={{ opacity: 0, rotate: -90 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: 90 }}
+                    >
+                      <X className="w-6 h-6" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="menu"
+                      initial={{ opacity: 0, rotate: 90 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: -90 }}
+                    >
+                      <Menu className="w-6 h-6" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
             </div>
           </div>
-
-          {/* Mobile menu button */}
-          <div className="xl:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary hover:bg-gray-100 focus:outline-none transition-colors"
-            >
-              {isOpen ? (
-                <X className="block h-6 w-6" aria-hidden="true" />
-              ) : (
-                <Menu className="block h-6 w-6" aria-hidden="true" />
-              )}
-            </button>
-          </div>
         </div>
-      </div>
+      </motion.nav>
 
-      {/* Mobile Menu */}
-      <div
-        className={cn(
-          "xl:hidden absolute top-16 left-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-lg transition-all duration-300 ease-in-out origin-top",
-          isOpen
-            ? "opacity-100 scale-y-100"
-            : "opacity-0 scale-y-0 pointer-events-none"
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 2xl:hidden"
+          />
         )}
+      </AnimatePresence>
+
+      {/* Mobile Drawer */}
+      <motion.div
+        initial="closed"
+        animate={isOpen ? "open" : "closed"}
+        variants={menuVariants}
+        className="fixed top-0 right-0 bottom-0 w-[280px] bg-white z-50 shadow-2xl 2xl:hidden flex flex-col"
       >
-        <div className="px-4 pt-2 pb-6 space-y-1 sm:px-3 max-h-[80vh] overflow-y-auto">
+        <div className="p-5 flex items-center justify-between border-b border-gray-100">
+          <div className="flex items-center gap-2">
+            <div className="bg-primary/10 p-2 rounded-lg">
+              <Code2 className="h-5 w-5 text-primary" />
+            </div>
+            <span className="font-bold text-lg">Menú</span>
+          </div>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+          >
+            <X className="w-5 h-5 text-gray-500" />
+          </button>
+        </div>
+
+        <div className="overflow-y-auto flex-1 p-4 space-y-1">
           {navItems.map((item) => {
-            const Icon = item.icon;
             const isActive = activeSection === item.id;
+            const Icon = item.icon;
             return (
-              <button
+              <motion.button
                 key={item.id}
+                variants={itemVariants}
                 onClick={() => handleNavClick(item.id)}
                 className={cn(
-                  "w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 flex items-center gap-3",
+                  "w-full text-left px-4 py-3.5 rounded-xl text-base font-medium transition-all flex items-center gap-3",
                   isActive
-                    ? "text-primary bg-primary/10"
+                    ? "text-primary bg-primary/10 shadow-sm shadow-primary/5"
                     : "text-gray-600 hover:text-primary hover:bg-gray-50"
                 )}
               >
-                <Icon className={cn("w-5 h-5", isActive && "text-primary")} />
+                <Icon
+                  className={cn(
+                    "w-5 h-5",
+                    isActive ? "text-primary" : "text-gray-400"
+                  )}
+                />
                 {item.label}
-              </button>
+              </motion.button>
             );
           })}
         </div>
-      </div>
-    </nav>
+
+        <div className="p-4 border-t border-gray-100 bg-gray-50/50">
+          <motion.a
+            variants={itemVariants}
+            href="/admin/login"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:border-primary hover:text-primary hover:bg-white transition-all shadow-sm"
+          >
+            <Lock className="w-4 h-4" />
+            Acceso Administrativo
+          </motion.a>
+        </div>
+      </motion.div>
+    </>
   );
 }

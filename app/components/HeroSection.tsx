@@ -31,13 +31,13 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
             transition={{ duration: 0.5 }}
             className="mb-4"
           >
-            <div className="w-24 h-24 md:w-32 md:h-32 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 shadow-lg">
+            <div className="w-24 h-24 m-2 md:w-32 md:h-32 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 shadow-lg">
               <Image
                 src="/LogoWhite.jpg"
                 alt="Logo CodeRAM"
                 width={120}
                 height={120}
-                className="w-full h-full object-contain rounded-full p-2"
+                className="p-2 w-full h-full object-contain rounded-full"
               />
             </div>
           </motion.div>

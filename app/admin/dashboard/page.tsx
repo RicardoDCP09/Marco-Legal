@@ -47,6 +47,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
 
   // Stats Calculation
@@ -79,6 +80,7 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
+    setMounted(true);
     // Check auth
     const user = localStorage.getItem("admin_user");
     if (!user) {
@@ -150,6 +152,8 @@ export default function DashboardPage() {
     router.push("/admin/login");
   };
 
+  if (!mounted) return null;
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -173,6 +177,13 @@ export default function DashboardPage() {
             >
               <FileText className="h-5 w-5" />
               <span>Editar Contenido</span>
+            </button>
+            <button
+              onClick={() => router.push("/admin/blog")}
+              className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
+            >
+              <FileText className="h-5 w-5" />
+              <span>Blog</span>
             </button>
             <button
               onClick={handleLogout}
