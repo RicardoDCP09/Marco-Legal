@@ -18,6 +18,7 @@ import FAQSection from "./components/FAQSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 import SuccessModal from "./components/SuccessModal";
+import Chatbot from "./components/chatbot";
 
 export default function CodeRAMPage() {
   const [activeSection, setActiveSection] = useState("sobre");
@@ -78,8 +79,9 @@ export default function CodeRAMPage() {
 
   return (
     <div className="bg-gray-50 text-gray-800 font-sans">
+      <Chatbot />
       <Navigation showSection={showSection} activeSection={activeSection} />
-      <HeroSection scrollToSection={scrollToSection} />
+      <HeroSection scrollToSection={scrollToSection} /> 
 
       <main className="max-w-6xl mx-auto px-4 py-16 space-y-24">
         <AboutSection isActive={activeSection === "sobre"} />
