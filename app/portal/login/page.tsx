@@ -48,7 +48,7 @@ export default function ClientLoginPage() {
             <Ticket className="w-10 h-10 text-primary" />
           </div>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold bg-gradient-blue bg-clip-text text-transparent">
+        <h2 className="mt-6 text-center text-3xl font-extrabold bg-gradient-blue bg-clip-text text-white">
           Portal de Clientes
         </h2>
         <p className="mt-2 text-center text-sm text-muted-foreground">

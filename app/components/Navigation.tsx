@@ -117,7 +117,7 @@ export default function Navigation({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="flex-shrink-0 flex items-center gap-2 cursor-pointer group"
-              onClick={() => showSection("sobre")}
+              onClick={() => showSection("inicio")}
             >
               <div className="bg-gradient-blue p-2.5 rounded-xl shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow">
                 <Code2 className="h-6 w-6 text-white" />

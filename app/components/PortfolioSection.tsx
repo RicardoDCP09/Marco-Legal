@@ -19,7 +19,7 @@ export default function PortfolioSection({ isActive }: PortfolioSectionProps) {
     <section id="portafolio" className={`${isActive ? "block" : "hidden"}`}>
       <ScrollReveal variant="fadeInUp" delay={0.1}>
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-white mb-6">
             Nuestro Portafolio
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -155,7 +155,7 @@ export default function PortfolioSection({ isActive }: PortfolioSectionProps) {
                     {project.tech.map((tech, idx) => (
                       <span
                         key={idx}
-                        className="bg-gray-100 px-2 py-1 rounded text-xs"
+                        className="bg-secondary/10 text-secondary-foreground border border-secondary/20 px-2 py-1 rounded text-xs"
                       >
                         {tech}
                       </span>

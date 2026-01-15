@@ -19,26 +19,92 @@ import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 import SuccessModal from "./components/SuccessModal";
 import Chatbot from "./components/chatbot";
+import PageHeader from "./components/PageHeader";
+
+// Helper to get header info
+const getSectionInfo = (section: string) => {
+  switch (section) {
+    case "sobre":
+      return {
+        title: "Sobre Nosotros",
+        description: "Conoce al equipo y la historia detrás de CodeRAM.",
+        breadcrumbs: [{ label: "Inicio", href: "#" }, { label: "Nosotros" }],
+      };
+    case "mision":
+      return {
+        title: "Misión y Visión",
+        description: "Nuestros valores y el futuro que estamos construyendo.",
+        breadcrumbs: [{ label: "Inicio", href: "#" }, { label: "Misión" }],
+      };
+    case "proceso":
+      return {
+        title: "Nuestro Proceso",
+        description: "Cómo transformamos tus ideas en realidad, paso a paso.",
+        breadcrumbs: [{ label: "Inicio", href: "#" }, { label: "Proceso" }],
+      };
+    case "tecnologias":
+      return {
+        title: "Tecnologías",
+        description: "Herramientas de vanguardia para soluciones robustas.",
+        breadcrumbs: [{ label: "Inicio", href: "#" }, { label: "Tech" }],
+      };
+    case "servicios":
+      return {
+        title: "Servicios",
+        description: "Soluciones digitales a medida para escalar tu negocio.",
+        breadcrumbs: [{ label: "Inicio", href: "#" }, { label: "Servicios" }],
+      };
+    case "portafolio":
+      return {
+        title: "Portafolio",
+        description: "Explora nuestros casos de éxito y proyectos destacados.",
+        breadcrumbs: [{ label: "Inicio", href: "#" }, { label: "Proyectos" }],
+      };
+    case "equipo":
+      return {
+        title: "Nuestro Equipo",
+        description: "Expertos apasionados por la innovación y el código.",
+        breadcrumbs: [{ label: "Inicio", href: "#" }, { label: "Equipo" }],
+      };
+    case "testimonios":
+      return {
+        title: "Testimonios",
+        description: "Lo que dicen nuestros clientes sobre nuestro trabajo.",
+        breadcrumbs: [{ label: "Inicio", href: "#" }, { label: "Reseñas" }],
+      };
+    case "faq":
+      return {
+        title: "Preguntas Frecuentes",
+        description:
+          "Respuestas a las dudas más comunes sobre nuestros servicios.",
+        breadcrumbs: [{ label: "Inicio", href: "#" }, { label: "FAQ" }],
+      };
+    case "contacto":
+      return {
+        title: "Contáctanos",
+        description: "¿Listo para empezar? Hablemos de tu próximo proyecto.",
+        breadcrumbs: [{ label: "Inicio", href: "#" }, { label: "Contacto" }],
+      };
+    default:
+      return {
+        title: "CodeRAM",
+        description: "Soluciones Digitales",
+      };
+  }
+};
 
 export default function CodeRAMPage() {
-  const [activeSection, setActiveSection] = useState("sobre");
+  const [activeSection, setActiveSection] = useState("inicio");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showSection = (id: string) => {
+  // Function to handle navigation and section switching
+  const handleSectionChange = (id: string) => {
     setActiveSection(id);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const scrollToSection = (id: string) => {
-    setActiveSection(id);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+  const showSection = (id: string) => handleSectionChange(id);
+  const scrollToSection = (id: string) => handleSectionChange(id);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,14 +140,31 @@ export default function CodeRAMPage() {
   };
 
   useEffect(() => {
-    setActiveSection("sobre");
+    // Ensure we start at the top with Hero visible
+    setActiveSection("inicio");
+    window.scrollTo(0, 0);
   }, []);
 
+  const sectionInfo = getSectionInfo(activeSection);
+
   return (
-    <div className="bg-background text-foreground font-sans">
+    <div className="bg-background text-foreground font-sans min-h-screen">
       <Chatbot />
       <Navigation showSection={showSection} activeSection={activeSection} />
-      <HeroSection scrollToSection={scrollToSection} />
+
+      {/* Hero Section - Acts as Home Page */}
+      <div className={activeSection === "inicio" ? "block" : "hidden"}>
+        <HeroSection scrollToSection={scrollToSection} />
+      </div>
+
+      {/* Mini Hero (PageHeader) for other sections */}
+      {activeSection !== "inicio" && (
+        <PageHeader
+          title={sectionInfo.title}
+          description={sectionInfo.description}
+          breadcrumbs={sectionInfo.breadcrumbs as any}
+        />
+      )}
 
       <main className="max-w-6xl mx-auto px-4 py-16 space-y-24">
         <AboutSection isActive={activeSection === "sobre"} />

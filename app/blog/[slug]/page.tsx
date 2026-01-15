@@ -54,7 +54,7 @@ export default function BlogPostPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <Loader2 className="w-12 h-12 animate-spin text-primary" />
       </div>
     );
@@ -63,22 +63,23 @@ export default function BlogPostPage() {
   if (!post) return null;
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col font-sans">
+    <div className="bg-background min-h-screen flex flex-col font-sans selection:bg-primary/30">
       <Navigation showSection={showSection} activeSection="" />
 
-      <main className="flex-grow w-full">
+      <main className="flex-grow w-full pt-20">
         {/* Hero / Header */}
-        <div className="bg-white border-b border-gray-100">
+        <div className="bg-card border-b border-border">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 text-gray-500 hover:text-primary mb-8 transition-colors"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary mb-8 transition-colors group"
             >
-              <ArrowLeft className="w-4 h-4" /> Volver al Blog
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />{" "}
+              Volver al Blog
             </Link>
 
-            <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
-              <span className="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full">
+            <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
+              <span className="flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/20">
                 <Calendar className="w-3 h-3" />
                 {new Date(post.created_at).toLocaleDateString("es-ES", {
                   year: "numeric",
@@ -91,7 +92,7 @@ export default function BlogPostPage() {
               </span>
             </div>
 
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-3xl md:text-5xl font-bold text-foreground leading-tight">
               {post.title}
             </h1>
           </div>
@@ -99,9 +100,58 @@ export default function BlogPostPage() {
 
         {/* Content */}
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12 prose prose-lg prose-blue max-w-none">
+          <div className="bg-card rounded-2xl shadow-lg shadow-black/20 border border-border p-8 md:p-12 prose prose-invert prose-lg prose-blue max-w-none">
             {/* We use ReactMarkdown to render the content responsibly */}
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+            <ReactMarkdown
+              components={{
+                // Custom styling for markdown elements if needed
+                h1: ({ node, ...props }) => (
+                  <h1 className="text-foreground" {...props} />
+                ),
+                h2: ({ node, ...props }) => (
+                  <h2 className="text-foreground mt-8 mb-4" {...props} />
+                ),
+                h3: ({ node, ...props }) => (
+                  <h3 className="text-foreground mt-6 mb-3" {...props} />
+                ),
+                p: ({ node, ...props }) => (
+                  <p
+                    className="text-muted-foreground leading-relaxed mb-4"
+                    {...props}
+                  />
+                ),
+                ul: ({ node, ...props }) => (
+                  <ul
+                    className="text-muted-foreground list-disc pl-6 mb-4"
+                    {...props}
+                  />
+                ),
+                li: ({ node, ...props }) => <li className="mb-2" {...props} />,
+                strong: ({ node, ...props }) => (
+                  <strong className="text-foreground font-bold" {...props} />
+                ),
+                a: ({ node, ...props }) => (
+                  <a
+                    className="text-primary hover:text-primary/80 underline decoration-primary/50"
+                    {...props}
+                  />
+                ),
+                blockquote: ({ node, ...props }) => (
+                  <blockquote
+                    className="border-l-4 border-primary pl-4 italic text-muted-foreground my-6"
+                    {...props}
+                  />
+                ),
+                code: ({ node, ...props }) => (
+                  <code
+                    className="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-sm font-mono"
+                    {...props}
+                  />
+                ),
+              }}
+            >
+              {post.content}
+            </ReactMarkdown>
           </div>
         </article>
       </main>

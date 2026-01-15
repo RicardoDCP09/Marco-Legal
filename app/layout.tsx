@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "./components/lenis-provider";
+import ScrollProgress from "./components/ScrollProgress";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,7 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable}`}>
       <body suppressHydrationWarning>
-        <LenisProvider>{children}</LenisProvider>
+        <LenisProvider>
+          <ScrollProgress />
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );

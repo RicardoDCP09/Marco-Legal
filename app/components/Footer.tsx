@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="text-xl font-bold mb-4 bg-gradient-blue bg-clip-text text-transparent">
+            <h3 className="text-xl font-bold mb-4 bg-gradient-blue bg-clip-text text-white">
               CodeRAM
             </h3>
             <p className="text-muted-foreground mb-4">

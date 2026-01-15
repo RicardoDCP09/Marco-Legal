@@ -24,6 +24,7 @@ export default function LoginPage() {
         // Simple "auth" by setting a cookie/localStorage
         localStorage.setItem("admin_user", JSON.stringify(users[0]));
         document.cookie = "admin_auth=true; path=/";
+        // Redirect to the protected dashboard
         router.push("/admin/dashboard");
       } else {
         setError("Credenciales inválidas");
@@ -37,15 +38,17 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="bg-card p-8 rounded-xl border border-border w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="bg-primary/20 p-3 rounded-xl backdrop-blur-sm border border-primary/30">
-              <Shield className="w-10 h-10 text-primary" />
+          <div className="flex justify-center mb-6">
+            <div className="bg-gradient-to-br from-primary/20 to-blue-600/20 p-4 rounded-2xl backdrop-blur-xl border border-primary/30 shadow-2xl shadow-primary/20 animate-in fade-in zoom-in duration-500">
+              <Shield className="w-12 h-12 text-primary" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold bg-gradient-blue bg-clip-text text-transparent">
-            Admin Login
+          <h1 className="text-3xl font-bold bg-gradient-blue bg-clip-text text-white mb-2">
+            CodeRAM Admin
           </h1>
-          <p className="text-muted-foreground">Ingresa tus credenciales</p>
+          <p className="text-muted-foreground text-sm">
+            Panel de Control Seguro
+          </p>
         </div>
 
         {error && (

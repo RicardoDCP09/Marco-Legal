@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import ScrollReveal from "./scroll-reveal";
+import MagneticButton from "./MagneticButton";
 
 interface ContactSectionProps {
   isActive: boolean;
@@ -14,7 +15,7 @@ export default function ContactSection({
     <section id="contacto" className={`${isActive ? "block" : "hidden"}`}>
       <ScrollReveal variant="fadeInUp" delay={0.1}>
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-white mb-6">
             Contáctanos
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -156,7 +157,7 @@ export default function ContactSection({
             <div>
               <label
                 htmlFor="empresa"
-                className="block mb-2 font-semibold text-gray-700"
+                className="block mb-2 font-semibold text-foreground"
               >
                 Empresa
               </label>
@@ -164,21 +165,21 @@ export default function ContactSection({
                 type="text"
                 id="empresa"
                 name="empresa"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition"
+                className="w-full bg-background border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
                 placeholder="Nombre de tu empresa"
               />
             </div>
             <div>
               <label
                 htmlFor="servicio"
-                className="block mb-2 font-semibold text-gray-700"
+                className="block mb-2 font-semibold text-foreground"
               >
                 Servicio de Interés
               </label>
               <select
                 id="servicio"
                 name="servicio"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition"
+                className="w-full bg-background border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
               >
                 <option value="">Selecciona un servicio</option>
                 <option value="desarrollo-web">Desarrollo Web</option>
@@ -192,7 +193,7 @@ export default function ContactSection({
             <div>
               <label
                 htmlFor="mensaje"
-                className="block mb-2 font-semibold text-gray-700"
+                className="block mb-2 font-semibold text-foreground"
               >
                 Mensaje *
               </label>
@@ -201,17 +202,19 @@ export default function ContactSection({
                 name="mensaje"
                 rows={5}
                 required
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition"
+                className="w-full bg-background border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
                 placeholder="Cuéntanos sobre tu proyecto..."
               />
             </div>
-            <button
-              type="submit"
-              className="w-full bg-secondary text-secondary-foreground px-6 py-4 rounded-lg hover:bg-secondary/90 transition font-bold shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-            >
-              Enviar Mensaje
-              <ArrowRight className="w-5 h-5" />
-            </button>
+            <MagneticButton className="w-full">
+              <button
+                type="submit"
+                className="w-full bg-secondary text-secondary-foreground px-6 py-4 rounded-lg hover:bg-secondary/90 transition font-bold shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+              >
+                Enviar Mensaje
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </MagneticButton>
           </form>
         </ScrollReveal>
       </div>

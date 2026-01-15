@@ -36,7 +36,7 @@ export default function MissionVisionSection({
   return (
     <section id="mision" className={`${isActive ? "block" : "hidden"}`}>
       <ScrollReveal variant="fadeInUp" delay={0.1}>
-        <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-transparent mb-12 text-center">
+        <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-white mb-12 text-center">
           Misión y Visión
         </h2>
       </ScrollReveal>

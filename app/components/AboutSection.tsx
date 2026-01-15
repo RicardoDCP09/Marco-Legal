@@ -4,6 +4,7 @@ import ScrollReveal, {
   ScrollRevealStagger,
   ScrollRevealItem,
 } from "./scroll-reveal";
+import AnimatedCounter from "./AnimatedCounter";
 
 interface AboutSectionProps {
   isActive: boolean;
@@ -26,7 +27,7 @@ export default function AboutSection({ isActive }: AboutSectionProps) {
     <section id="sobre" className={`${isActive ? "block" : "hidden"}`}>
       <ScrollReveal variant="fadeInUp" delay={0.1}>
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-white mb-6">
             {content.title}
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
@@ -105,22 +106,33 @@ export default function AboutSection({ isActive }: AboutSectionProps) {
             </div>
             <div className="bg-card p-6 rounded-lg border border-border">
               <h4 className="font-bold text-lg mb-4">Logros Destacados</h4>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span>50+ proyectos completados exitosamente</span>
+              <ul className="space-y-4">
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0" />
+                  <span className="flex items-center gap-1 font-medium">
+                    <AnimatedCounter value={50} suffix="+" /> proyectos
+                    completados
+                  </span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span>99% de satisfacción del cliente</span>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0" />
+                  <span className="flex items-center gap-1 font-medium">
+                    <AnimatedCounter value={99} suffix="%" /> satisfacción del
+                    cliente
+                  </span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span>Presencia en 5 países de Latinoamérica</span>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0" />
+                  <span className="flex items-center gap-1 font-medium">
+                    Presencia en <AnimatedCounter value={5} /> países
+                  </span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span>Equipo de 15+ profesionales especializados</span>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0" />
+                  <span className="flex items-center gap-1 font-medium">
+                    Equipo de <AnimatedCounter value={15} suffix="+" />{" "}
+                    profesionales
+                  </span>
                 </li>
               </ul>
             </div>

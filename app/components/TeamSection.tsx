@@ -13,7 +13,7 @@ export default function TeamSection({ isActive }: TeamSectionProps) {
     <section id="equipo" className={`${isActive ? "block" : "hidden"}`}>
       <ScrollReveal variant="fadeInUp" delay={0.1}>
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-white mb-6">
             Nuestro Equipo
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">

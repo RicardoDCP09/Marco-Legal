@@ -6,6 +6,7 @@ import ScrollReveal, {
 import placeholderW2 from "../assets/plaholderW2.png";
 import placeholderM from "../assets/placeholderM.png";
 import placeholderW from "../assets/placeholderW.png";
+import AnimatedCounter from "./AnimatedCounter";
 
 interface TestimonialsSectionProps {
   isActive: boolean;
@@ -18,7 +19,7 @@ export default function TestimonialsSection({
     <section id="testimonios" className={`${isActive ? "block" : "hidden"}`}>
       <ScrollReveal variant="fadeInUp" delay={0.1}>
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-white mb-6">
             Testimonios
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -64,7 +65,10 @@ export default function TestimonialsSection({
           },
         ].map((testimonial, index) => (
           <ScrollRevealItem key={index} variant="fadeInUp">
-            <div key={index} className="bg-white p-8 rounded-xl shadow-lg">
+            <div
+              key={index}
+              className="bg-card p-8 rounded-xl border border-border hover:border-primary/50 transition-all shadow-sm hover:shadow-lg h-full"
+            >
               <div className="flex items-center mb-4">
                 <img
                   src={
@@ -75,11 +79,15 @@ export default function TestimonialsSection({
                   alt={testimonial.name}
                   width={300}
                   height={200}
-                  className="w-16 h-16 rounded-full mr-4"
+                  className="w-16 h-16 rounded-full mr-4 border-2 border-primary/20"
                 />
                 <div>
-                  <h4 className="font-bold">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-600">{testimonial.role}</p>
+                  <h4 className="font-bold text-foreground">
+                    {testimonial.name}
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    {testimonial.role}
+                  </p>
                   <p className="text-sm text-primary">{testimonial.company}</p>
                 </div>
               </div>
@@ -91,10 +99,10 @@ export default function TestimonialsSection({
                   />
                 ))}
               </div>
-              <p className="text-gray-700 italic mb-4">
+              <p className="text-muted-foreground italic mb-6 leading-relaxed">
                 "{testimonial.testimonial}"
               </p>
-              <div className="bg-primary/5 p-3 rounded-lg">
+              <div className="bg-primary/10 p-3 rounded-lg border border-primary/10">
                 <p className="text-sm font-medium text-primary">
                   Proyecto: {testimonial.project}
                 </p>
@@ -105,54 +113,84 @@ export default function TestimonialsSection({
       </ScrollRevealStagger>
 
       <ScrollReveal variant="fadeInUp" delay={0.3}>
-        <div className="bg-primary/5 p-12 rounded-xl">
-          <h3 className="text-3xl font-bold text-center mb-8 text-primary">
+        <div className="bg-secondary/5 border border-border/50 p-8 md:p-12 rounded-2xl">
+          <h3 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Casos de Éxito Destacados
           </h3>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
               <h4 className="text-xl font-bold mb-4 text-primary">
                 Academia Digital Plus
               </h4>
               <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span>Aumento en matrículas:</span>
-                  <span className="font-bold text-green-600">+40%</span>
+                <div className="flex justify-between items-center bg-background/50 p-2 rounded">
+                  <span className="text-muted-foreground">
+                    Aumento en matrículas:
+                  </span>
+                  <span className="font-bold text-green-400">
+                    +<AnimatedCounter value={40} suffix="%" />
+                  </span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Reducción tiempo administrativo:</span>
-                  <span className="font-bold text-green-600">-60%</span>
+                <div className="flex justify-between items-center bg-background/50 p-2 rounded">
+                  <span className="text-muted-foreground">
+                    Reducción t. administrativo:
+                  </span>
+                  <span className="font-bold text-green-400">
+                    -<AnimatedCounter value={60} suffix="%" />
+                  </span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Satisfacción de usuarios:</span>
-                  <span className="font-bold text-green-600">98%</span>
+                <div className="flex justify-between items-center bg-background/50 p-2 rounded">
+                  <span className="text-muted-foreground">
+                    Satisfacción de usuarios:
+                  </span>
+                  <span className="font-bold text-green-400">
+                    <AnimatedCounter value={98} suffix="%" />
+                  </span>
                 </div>
-                <div className="flex justify-between">
-                  <span>ROI en primer año:</span>
-                  <span className="font-bold text-green-600">250%</span>
+                <div className="flex justify-between items-center bg-background/50 p-2 rounded">
+                  <span className="text-muted-foreground">
+                    ROI en primer año:
+                  </span>
+                  <span className="font-bold text-green-400">
+                    <AnimatedCounter value={250} suffix="%" />
+                  </span>
                 </div>
               </div>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
               <h4 className="text-xl font-bold mb-4 text-primary">
                 FitMax Pro
               </h4>
               <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span>Retención de miembros:</span>
-                  <span className="font-bold text-green-600">+25%</span>
+                <div className="flex justify-between items-center bg-background/50 p-2 rounded">
+                  <span className="text-muted-foreground">
+                    Retención de miembros:
+                  </span>
+                  <span className="font-bold text-green-400">
+                    +<AnimatedCounter value={25} suffix="%" />
+                  </span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Automatización de procesos:</span>
-                  <span className="font-bold text-green-600">90%</span>
+                <div className="flex justify-between items-center bg-background/50 p-2 rounded">
+                  <span className="text-muted-foreground">
+                    Automatización de procesos:
+                  </span>
+                  <span className="font-bold text-green-400">
+                    <AnimatedCounter value={90} suffix="%" />
+                  </span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Usuarios activos en app:</span>
-                  <span className="font-bold text-green-600">5,000+</span>
+                <div className="flex justify-between items-center bg-background/50 p-2 rounded">
+                  <span className="text-muted-foreground">
+                    Usuarios activos en app:
+                  </span>
+                  <span className="font-bold text-green-400">
+                    <AnimatedCounter value={5000} suffix="+" />
+                  </span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Tiempo de implementación:</span>
-                  <span className="font-bold text-blue-600">3 meses</span>
+                <div className="flex justify-between items-center bg-background/50 p-2 rounded">
+                  <span className="text-muted-foreground">
+                    Tiempo de implementación:
+                  </span>
+                  <span className="font-bold text-blue-400">3 meses</span>
                 </div>
               </div>
             </div>

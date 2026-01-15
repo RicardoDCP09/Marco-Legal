@@ -19,7 +19,7 @@ export default function ServicesSection({ isActive }: ServicesSectionProps) {
     <section id="servicios" className={`${isActive ? "block" : "hidden"}`}>
       <ScrollReveal variant="fadeInUp" delay={0.1}>
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-white mb-6">
             Nuestros Servicios
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -111,7 +111,7 @@ export default function ServicesSection({ isActive }: ServicesSectionProps) {
 
       <ScrollReveal variant="fadeInUp" delay={0.3}>
         <div className="bg-card/50 border border-border p-12 rounded-xl">
-          <h3 className="text-3xl font-bold text-center mb-8 bg-gradient-blue bg-clip-text text-transparent">
+          <h3 className="text-3xl font-bold text-center mb-8 bg-gradient-blue bg-clip-text text-white">
             Servicios Especializados
           </h3>
           <div className="grid md:grid-cols-2 gap-8">
