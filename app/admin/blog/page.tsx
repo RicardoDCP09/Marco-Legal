@@ -90,28 +90,30 @@ export default function BlogAdminPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
+    <div className="min-h-screen bg-background">
+      <header className="bg-card border-b border-border">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push("/admin/dashboard")}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 hover:bg-primary/10 rounded-full transition-colors"
             >
-              <ArrowLeft className="w-5 h-5 text-gray-600" />
+              <ArrowLeft className="w-5 h-5 text-foreground" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">Blog Manager</h1>
+            <h1 className="text-2xl font-bold bg-gradient-blue bg-clip-text text-transparent">
+              Blog Manager
+            </h1>
           </div>
           <button
             onClick={() => setIsCreating(true)}
-            className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+            className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
           >
             <Plus className="w-4 h-4" />
             Nueva Publicación
@@ -121,15 +123,19 @@ export default function BlogAdminPage() {
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {isCreating && (
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8 animate-in fade-in slide-in-from-top-4">
-            <h3 className="text-lg font-bold mb-4">Crear Artículo</h3>
+          <div className="bg-card p-6 rounded-xl border border-border mb-8 animate-in fade-in slide-in-from-top-4">
+            <h3 className="text-lg font-bold text-foreground mb-4">
+              Crear Artículo
+            </h3>
             <form onSubmit={handleCreate} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1">Título</label>
+                <label className="block text-sm font-medium text-foreground mb-1">
+                  Título
+                </label>
                 <input
                   type="text"
                   required
-                  className="w-full border rounded-lg p-2"
+                  className="w-full bg-background border border-border rounded-lg p-2 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
                   value={formData.title}
                   onChange={(e) =>
                     setFormData({ ...formData, title: e.target.value })
@@ -137,13 +143,13 @@ export default function BlogAdminPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-medium text-foreground mb-1">
                   Contenido (Markdown)
                 </label>
                 <textarea
                   required
                   rows={8}
-                  className="w-full border rounded-lg p-2 font-mono text-sm"
+                  className="w-full bg-background border border-border rounded-lg p-2 font-mono text-sm text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition resize-none"
                   value={formData.content}
                   onChange={(e) =>
                     setFormData({ ...formData, content: e.target.value })
@@ -154,14 +160,14 @@ export default function BlogAdminPage() {
                 <button
                   type="button"
                   onClick={() => setIsCreating(false)}
-                  className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                  className="px-4 py-2 text-muted-foreground hover:bg-background rounded-lg transition"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 disabled:opacity-50 flex items-center gap-2"
+                  className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 disabled:opacity-50 flex items-center gap-2 shadow-lg shadow-primary/20 transition"
                 >
                   {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                   Publicar
@@ -175,19 +181,19 @@ export default function BlogAdminPage() {
           {posts.map((post) => (
             <div
               key={post.id}
-              className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between group"
+              className="bg-card p-6 rounded-xl border border-border flex items-center justify-between group hover:border-primary/50 transition-colors"
             >
               <div>
-                <h3 className="font-bold text-lg text-gray-900">
+                <h3 className="font-bold text-lg text-foreground">
                   {post.title}
                 </h3>
-                <p className="text-sm text-gray-500 flex items-center gap-4 mt-1">
+                <p className="text-sm text-muted-foreground flex items-center gap-4 mt-1">
                   <span>{new Date(post.created_at).toLocaleDateString()}</span>
                   <span
-                    className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-xs ${
+                    className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-xs border ${
                       post.published
-                        ? "bg-green-100 text-green-700"
-                        : "bg-gray-100 text-gray-600"
+                        ? "bg-green-500/20 text-green-400 border-green-500/30"
+                        : "bg-gray-500/20 text-gray-400 border-gray-500/30"
                     }`}
                   >
                     {post.published ? (
@@ -203,7 +209,7 @@ export default function BlogAdminPage() {
                 {/* Edit button could go here */}
                 <button
                   onClick={() => handleDelete(post.id)}
-                  className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                  className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
                   title="Eliminar"
                 >
                   <Trash2 className="w-5 h-5" />
@@ -213,7 +219,7 @@ export default function BlogAdminPage() {
           ))}
 
           {posts.length === 0 && !isCreating && (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-12 text-muted-foreground">
               No hay publicaciones aún.
             </div>
           )}

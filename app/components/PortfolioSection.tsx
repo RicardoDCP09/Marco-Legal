@@ -1,4 +1,8 @@
 import { CheckCircle } from "lucide-react";
+import ScrollReveal, {
+  ScrollRevealStagger,
+  ScrollRevealItem,
+} from "./scroll-reveal";
 import academia from "../assets/academia.png";
 import gimnasio from "../assets/fitmax.png";
 import erp from "../assets/erp.png";
@@ -13,17 +17,21 @@ interface PortfolioSectionProps {
 export default function PortfolioSection({ isActive }: PortfolioSectionProps) {
   return (
     <section id="portafolio" className={`${isActive ? "block" : "hidden"}`}>
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-primary mb-6">
-          Nuestro Portafolio
-        </h2>
-        <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-          Algunos de nuestros proyectos más destacados que demuestran nuestra
-          experiencia y calidad
-        </p>
-      </div>
+      <ScrollReveal variant="fadeInUp" delay={0.1}>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-transparent mb-6">
+            Nuestro Portafolio
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Proyectos exitosos que demuestran nuestra experiencia y calidad
+          </p>
+        </div>
+      </ScrollReveal>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+      <ScrollRevealStagger
+        staggerDelay={0.15}
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+      >
         {[
           {
             title: "Academia Digital Plus",
@@ -104,65 +112,69 @@ export default function PortfolioSection({ isActive }: PortfolioSectionProps) {
             tech: ["React", "Express", "Redis", "Google Maps API"],
           },
         ].map((project, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
-          >
-            <img
-              src={
-                typeof project.image === "string"
-                  ? project.image
-                  : project.image?.src || "/placeholder.svg"
-              }
-              alt={project.title}
-              className="w-full h-48 object-cover"
-              width={300}
-              height={200}
-            />
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-3">
-                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
-                  {project.category}
-                </span>
-              </div>
-              <h3 className="text-xl font-bold mb-3">{project.title}</h3>
-              <p className="text-gray-600 mb-4">{project.description}</p>
+          <ScrollRevealItem key={index} variant="scale">
+            <div
+              key={index}
+              className="bg-card rounded-xl border border-border hover:border-primary/50 transition-all overflow-hidden group"
+            >
+              <img
+                src={
+                  typeof project.image === "string"
+                    ? project.image
+                    : project.image?.src || "/placeholder.svg"
+                }
+                alt={project.title}
+                className="w-full h-48 object-cover"
+                width={300}
+                height={200}
+              />
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
+                    {project.category}
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold mb-3">{project.title}</h3>
+                <p className="text-gray-600 mb-4">{project.description}</p>
 
-              <div className="mb-4">
-                <h4 className="font-semibold mb-2">Resultados:</h4>
-                <ul className="space-y-1">
-                  {project.results.map((result, idx) => (
-                    <li key={idx} className="flex items-center gap-2 text-sm">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>{result}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                <div className="mb-4">
+                  <h4 className="font-semibold mb-2">Resultados:</h4>
+                  <ul className="space-y-1">
+                    {project.results.map((result, idx) => (
+                      <li key={idx} className="flex items-center gap-2 text-sm">
+                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <span>{result}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-              <div>
-                <h4 className="font-semibold mb-2">Tecnologías:</h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech, idx) => (
-                    <span
-                      key={idx}
-                      className="bg-gray-100 px-2 py-1 rounded text-xs"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                <div>
+                  <h4 className="font-semibold mb-2">Tecnologías:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech, idx) => (
+                      <span
+                        key={idx}
+                        className="bg-gray-100 px-2 py-1 rounded text-xs"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollRevealItem>
         ))}
-      </div>
+      </ScrollRevealStagger>
 
-      <div className="text-center">
-        <button className="bg-secondary text-secondary-foreground px-8 py-3 rounded-lg hover:bg-secondary/90 transition font-bold">
-          Ver Más Proyectos
-        </button>
-      </div>
+      <ScrollReveal variant="fadeInUp" delay={0.2}>
+        <div className="text-center">
+          <button className="bg-secondary text-secondary-foreground px-8 py-3 rounded-lg hover:bg-secondary/90 transition font-bold">
+            Ver Más Proyectos
+          </button>
+        </div>
+      </ScrollReveal>
     </section>
   );
 }

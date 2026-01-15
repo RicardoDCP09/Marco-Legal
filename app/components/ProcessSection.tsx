@@ -6,6 +6,10 @@ import {
   Zap,
   Settings,
 } from "lucide-react";
+import ScrollReveal, {
+  ScrollRevealStagger,
+  ScrollRevealItem,
+} from "./scroll-reveal";
 
 interface ProcessSectionProps {
   isActive: boolean;
@@ -14,17 +18,19 @@ interface ProcessSectionProps {
 export default function ProcessSection({ isActive }: ProcessSectionProps) {
   return (
     <section id="proceso" className={`${isActive ? "block" : "hidden"}`}>
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-primary mb-6">
-          Nuestro Proceso de Trabajo
-        </h2>
-        <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-          Seguimos una metodología probada que garantiza resultados
-          excepcionales en cada proyecto
-        </p>
-      </div>
+      <ScrollReveal variant="fadeInUp" delay={0.1}>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-transparent mb-6">
+            Nuestro Proceso de Trabajo
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Seguimos una metodología probada que garantiza resultados
+            excepcionales en cada proyecto
+          </p>
+        </div>
+      </ScrollReveal>
 
-      <div className="space-y-12">
+      <ScrollRevealStagger staggerDelay={0.2} className="space-y-12">
         {[
           {
             step: "01",
@@ -105,35 +111,38 @@ export default function ProcessSection({ isActive }: ProcessSectionProps) {
             ],
           },
         ].map((phase, index) => (
-          <div
-            key={index}
-            className="flex flex-col md:flex-row items-center gap-8"
-          >
-            <div className="flex-shrink-0">
-              <div className="bg-primary text-primary-foreground w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold">
-                {phase.step}
-              </div>
-            </div>
-            <div className="flex-1 bg-white p-8 rounded-xl shadow-lg">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="bg-primary/10 p-3 rounded-full text-primary">
-                  {phase.icon}
+          <ScrollRevealItem key={index} variant="fadeInUp">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-shrink-0">
+                <div className="bg-primary text-primary-foreground w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg shadow-primary/30">
+                  {phase.step}
                 </div>
-                <h3 className="text-2xl font-bold">{phase.title}</h3>
               </div>
-              <p className="text-gray-700 text-lg mb-4">{phase.description}</p>
-              <div className="grid grid-cols-2 gap-2">
-                {phase.details.map((detail, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    <span className="text-sm text-gray-600">{detail}</span>
+              <div className="flex-1 bg-card p-8 rounded-xl border border-border hover:border-primary/50 transition-colors">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="bg-primary/20 p-3 rounded-full text-primary">
+                    {phase.icon}
                   </div>
-                ))}
+                  <h3 className="text-2xl font-bold text-foreground">
+                    {phase.title}
+                  </h3>
+                </div>
+                <p className="text-muted-foreground text-lg mb-4">
+                  {phase.description}
+                </p>
+                <div className="grid grid-cols-2 gap-2">
+                  {phase.details.map((detail, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-primary" />
+                      <span className="text-sm text-foreground">{detail}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollRevealItem>
         ))}
-      </div>
+      </ScrollRevealStagger>
     </section>
   );
 }

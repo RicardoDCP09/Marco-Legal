@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import {
   Menu,
   X,
-  Info,
   Target,
   Settings,
   Cpu,
@@ -71,7 +70,6 @@ export default function Navigation({
     setIsOpen(false);
   };
 
-  // Menu Animation Variants
   const menuVariants = {
     closed: {
       opacity: 0,
@@ -108,8 +106,8 @@ export default function Navigation({
         className={cn(
           "sticky top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled || isOpen
-            ? "bg-white/90 backdrop-blur-xl shadow-md border-b border-gray-200/50"
-            : "bg-white/90 backdrop-blur-xl shadow-md border-b border-gray-200/50"
+            ? "bg-black/20 backdrop-blur-md border-b border-white/5"
+            : "bg-transparent border-b border-transparent"
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -118,19 +116,19 @@ export default function Navigation({
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex-shrink-0 flex items-center gap-2 cursor-pointer"
+              className="flex-shrink-0 flex items-center gap-2 cursor-pointer group"
               onClick={() => showSection("sobre")}
             >
-              <div className="bg-gradient-to-br from-primary to-blue-600 p-2.5 rounded-xl shadow-lg shadow-primary/20 text-white">
-                <Code2 className="h-6 w-6" />
+              <div className="bg-gradient-blue p-2.5 rounded-xl shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow">
+                <Code2 className="h-6 w-6 text-white" />
               </div>
-              <span className="font-bold text-xl tracking-tight text-gray-900">
+              <span className="font-bold text-xl tracking-tight text-foreground">
                 CodeRAM
               </span>
             </motion.div>
 
             {/* Desktop Menu */}
-            <div className="hidden 2xl:flex items-center gap-1">
+            <div className="hidden 2xl:flex items-center gap-1 bg-transparent ">
               {navItems.map((item) => {
                 const isActive = activeSection === item.id;
                 const Icon = item.icon;
@@ -139,16 +137,16 @@ export default function Navigation({
                     key={item.id}
                     onClick={() => handleNavClick(item.id)}
                     className={cn(
-                      "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 group",
+                      "relative px-3 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 group",
                       isActive
                         ? "text-primary"
-                        : "text-gray-600 hover:text-primary hover:bg-gray-50"
+                        : "text-muted-foreground hover:text-primary hover:bg-accent"
                     )}
                   >
                     {isActive && (
                       <motion.div
                         layoutId="activeNav"
-                        className="absolute inset-0 bg-primary/10 rounded-lg -z-10"
+                        className="absolute inset-0 bg-primary/10 rounded-lg -z-10 border border-primary/20"
                         transition={{
                           type: "spring",
                           stiffness: 500,
@@ -162,13 +160,13 @@ export default function Navigation({
                 );
               })}
 
-              <div className="w-px h-6 bg-gray-200 mx-2" />
+              <div className="w-px h-6 bg-border mx-2" />
 
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="/admin/login"
-                className="p-2 rounded-full text-gray-500 hover:text-primary hover:bg-blue-50 transition-colors"
+                className="p-2 rounded-full text-muted-foreground hover:text-primary hover:bg-accent transition-colors"
                 title="Acceso Administrativo"
               >
                 <Lock className="w-5 h-5" />
@@ -180,7 +178,7 @@ export default function Navigation({
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="inline-flex items-center justify-center p-2.5 rounded-xl text-gray-700 hover:text-primary hover:bg-gray-100 focus:outline-none transition-colors border border-gray-200/50 bg-white/50 backdrop-blur-sm"
+                className="inline-flex items-center justify-center p-2.5 rounded-xl text-foreground hover:text-primary hover:bg-accent focus:outline-none transition-colors border border-border bg-card/50 backdrop-blur-sm"
               >
                 <AnimatePresence mode="wait">
                   {isOpen ? (
@@ -217,7 +215,7 @@ export default function Navigation({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsOpen(false)}
-            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 2xl:hidden"
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 2xl:hidden"
           />
         )}
       </AnimatePresence>
@@ -227,20 +225,20 @@ export default function Navigation({
         initial="closed"
         animate={isOpen ? "open" : "closed"}
         variants={menuVariants}
-        className="fixed top-0 right-0 bottom-0 w-[280px] bg-white z-50 shadow-2xl 2xl:hidden flex flex-col"
+        className="fixed top-0 right-0 bottom-0 w-[280px] bg-card border-l border-border z-50 shadow-2xl 2xl:hidden flex flex-col"
       >
-        <div className="p-5 flex items-center justify-between border-b border-gray-100">
+        <div className="p-5 flex items-center justify-between border-b border-border">
           <div className="flex items-center gap-2">
-            <div className="bg-primary/10 p-2 rounded-lg">
+            <div className="bg-primary/20 p-2 rounded-lg">
               <Code2 className="h-5 w-5 text-primary" />
             </div>
-            <span className="font-bold text-lg">Menú</span>
+            <span className="font-bold text-lg text-foreground">Menú</span>
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-full hover:bg-accent transition-colors"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X className="w-5 h-5 text-muted-foreground" />
           </button>
         </div>
 
@@ -256,14 +254,14 @@ export default function Navigation({
                 className={cn(
                   "w-full text-left px-4 py-3.5 rounded-xl text-base font-medium transition-all flex items-center gap-3",
                   isActive
-                    ? "text-primary bg-primary/10 shadow-sm shadow-primary/5"
-                    : "text-gray-600 hover:text-primary hover:bg-gray-50"
+                    ? "text-primary bg-primary/10 shadow-sm border border-primary/20"
+                    : "text-muted-foreground hover:text-primary hover:bg-accent"
                 )}
               >
                 <Icon
                   className={cn(
                     "w-5 h-5",
-                    isActive ? "text-primary" : "text-gray-400"
+                    isActive ? "text-primary" : "text-muted-foreground"
                   )}
                 />
                 {item.label}
@@ -272,11 +270,11 @@ export default function Navigation({
           })}
         </div>
 
-        <div className="p-4 border-t border-gray-100 bg-gray-50/50">
+        <div className="p-4 border-t border-border bg-muted/20">
           <motion.a
             variants={itemVariants}
             href="/admin/login"
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:border-primary hover:text-primary hover:bg-white transition-all shadow-sm"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-border text-foreground font-medium hover:border-primary hover:text-primary hover:bg-card transition-all shadow-sm"
           >
             <Lock className="w-4 h-4" />
             Acceso Administrativo

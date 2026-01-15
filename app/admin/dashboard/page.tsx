@@ -40,7 +40,7 @@ interface Proposal {
   response?: string;
 }
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#00D4FF", "#0080FF", "#FFBB28", "#FF8042"];
 
 export default function DashboardPage() {
   const [proposals, setProposals] = useState<Proposal[]>([]);
@@ -156,38 +156,38 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-card border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold bg-gradient-blue bg-clip-text text-transparent">
             Panel Administrativo
           </h1>
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push("/admin/cms")}
-              className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
+              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
             >
               <FileText className="h-5 w-5" />
               <span>Editar Contenido</span>
             </button>
             <button
               onClick={() => router.push("/admin/blog")}
-              className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
+              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
             >
               <FileText className="h-5 w-5" />
               <span>Blog</span>
             </button>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 text-gray-600 hover:text-red-600 transition-colors"
+              className="flex items-center gap-2 text-muted-foreground hover:text-red-500 transition-colors"
             >
               <LogOut className="h-5 w-5" />
               <span>Cerrar Sesión</span>
@@ -200,8 +200,8 @@ export default function DashboardPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Section */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+          <div className="bg-card p-6 rounded-xl border border-border">
+            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <PieChartIcon className="w-5 h-5 text-primary" />
               Estado de Propuestas
             </h3>
@@ -221,25 +221,44 @@ export default function DashboardPage() {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#16161d",
+                      border: "1px solid #333",
+                      borderRadius: "8px",
+                      color: "#fff",
+                    }}
+                  />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+          <div className="bg-card p-6 rounded-xl border border-border">
+            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <BarChart2 className="w-5 h-5 text-primary" />
               Servicios Solicitados
             </h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={serviceData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" fontSize={12} tickMargin={10} />
-                  <YAxis allowDecimals={false} />
-                  <Tooltip />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                  <XAxis
+                    dataKey="name"
+                    fontSize={12}
+                    tickMargin={10}
+                    stroke="#888"
+                  />
+                  <YAxis allowDecimals={false} stroke="#888" />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#16161d",
+                      border: "1px solid #333",
+                      borderRadius: "8px",
+                      color: "#fff",
+                    }}
+                  />
                   <Bar dataKey="value" fill="#8884d8" radius={[4, 4, 0, 0]}>
                     {serviceData.map((entry, index) => (
                       <Cell
@@ -255,10 +274,10 @@ export default function DashboardPage() {
         </div>
 
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-700">
+          <h2 className="text-lg font-semibold text-foreground">
             Propuestas Recientes
           </h2>
-          <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
+          <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm font-medium border border-primary/30">
             {proposals.length} Total
           </span>
         </div>
@@ -267,38 +286,38 @@ export default function DashboardPage() {
           {proposals.map((proposal) => (
             <div
               key={proposal.id}
-              className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all hover:shadow-md"
+              className="bg-card rounded-xl border border-border p-6 transition-all hover:border-primary/50"
             >
               <div className="flex flex-col md:flex-row justify-between gap-6">
                 <div className="flex-1 space-y-4">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                      <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
                         {proposal.nombre}
                         {proposal.status === "pending" && (
-                          <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <span className="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-0.5 rounded-full flex items-center gap-1 border border-yellow-500/30">
                             <Clock className="w-3 h-3" /> Pendiente
                           </span>
                         )}
                         {proposal.status === "accepted" && (
-                          <span className="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <span className="bg-green-500/20 text-green-400 text-xs px-2 py-0.5 rounded-full flex items-center gap-1 border border-green-500/30">
                             <Check className="w-3 h-3" /> Aceptada
                           </span>
                         )}
                         {proposal.status === "rejected" && (
-                          <span className="bg-red-100 text-red-800 text-xs px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <span className="bg-red-500/20 text-red-400 text-xs px-2 py-0.5 rounded-full flex items-center gap-1 border border-red-500/30">
                             <X className="w-3 h-3" /> Rechazada
                           </span>
                         )}
                       </h3>
-                      <p className="text-sm text-gray-500 mt-1">
+                      <p className="text-sm text-muted-foreground mt-1">
                         {new Date(proposal.date).toLocaleDateString()} •{" "}
                         {proposal.servicio}
                       </p>
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
+                  <div className="grid md:grid-cols-2 gap-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <Mail className="w-4 h-4" />
                       {proposal.email}
@@ -311,17 +330,17 @@ export default function DashboardPage() {
                     )}
                   </div>
 
-                  <div className="bg-gray-50 p-4 rounded-lg text-gray-700 text-sm leading-relaxed">
+                  <div className="bg-background p-4 rounded-lg text-foreground text-sm leading-relaxed border border-border">
                     {proposal.mensaje}
                   </div>
 
                   {/* Response Section */}
                   {proposal.response && (
-                    <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                      <p className="text-xs font-semibold text-blue-800 mb-1">
+                    <div className="bg-primary/10 p-4 rounded-lg border border-primary/20">
+                      <p className="text-xs font-semibold text-primary mb-1">
                         Tu Respuesta:
                       </p>
-                      <p className="text-sm text-blue-900">
+                      <p className="text-sm text-foreground">
                         {proposal.response}
                       </p>
                     </div>
@@ -332,7 +351,7 @@ export default function DashboardPage() {
                       <textarea
                         value={replyText}
                         onChange={(e) => setReplyText(e.target.value)}
-                        className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
+                        className="w-full bg-background border border-border rounded-lg p-3 text-sm text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
                         placeholder="Escribe tu respuesta aquí..."
                         rows={3}
                         autoFocus
@@ -340,7 +359,7 @@ export default function DashboardPage() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleReply(proposal.id)}
-                          className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+                          className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
                         >
                           Enviar Respuesta
                         </button>
@@ -349,7 +368,7 @@ export default function DashboardPage() {
                             setReplyingTo(null);
                             setReplyText("");
                           }}
-                          className="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
+                          className="bg-card border border-border text-foreground px-4 py-2 rounded-lg text-sm font-medium hover:bg-background transition-colors"
                         >
                           Cancelar
                         </button>
@@ -358,7 +377,7 @@ export default function DashboardPage() {
                   )}
                 </div>
 
-                <div className="flex md:flex-col gap-2 justify-center border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-6 min-w-[140px]">
+                <div className="flex md:flex-col gap-2 justify-center border-t md:border-t-0 md:border-l border-border pt-4 md:pt-0 md:pl-6 min-w-[140px]">
                   {proposal.status === "pending" && (
                     <>
                       <button
@@ -370,7 +389,7 @@ export default function DashboardPage() {
                       </button>
                       <button
                         onClick={() => updateStatus(proposal.id, "rejected")}
-                        className="flex-1 flex items-center justify-center gap-2 bg-white border border-red-200 text-red-600 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors text-sm font-medium"
+                        className="flex-1 flex items-center justify-center gap-2 bg-card border border-red-500/30 text-red-400 px-4 py-2 rounded-lg hover:bg-red-500/10 transition-colors text-sm font-medium"
                       >
                         <X className="w-4 h-4" />
                         Rechazar
@@ -394,7 +413,7 @@ export default function DashboardPage() {
                   {proposal.status !== "pending" && (
                     <button
                       onClick={() => updateStatus(proposal.id, "pending")}
-                      className="flex-1 flex items-center justify-center gap-2 text-gray-400 hover:text-gray-600 text-sm"
+                      className="flex-1 flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground text-sm"
                     >
                       Deshacer
                     </button>
@@ -405,7 +424,7 @@ export default function DashboardPage() {
           ))}
 
           {proposals.length === 0 && (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-12 text-muted-foreground">
               No hay propuestas registradas aún.
             </div>
           )}

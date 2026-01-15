@@ -78,10 +78,10 @@ export default function CodeRAMPage() {
   }, []);
 
   return (
-    <div className="bg-gray-50 text-gray-800 font-sans">
+    <div className="bg-background text-foreground font-sans">
       <Chatbot />
       <Navigation showSection={showSection} activeSection={activeSection} />
-      <HeroSection scrollToSection={scrollToSection} /> 
+      <HeroSection scrollToSection={scrollToSection} />
 
       <main className="max-w-6xl mx-auto px-4 py-16 space-y-24">
         <AboutSection isActive={activeSection === "sobre"} />

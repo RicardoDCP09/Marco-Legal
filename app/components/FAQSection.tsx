@@ -1,4 +1,8 @@
 import { ChevronDown } from "lucide-react";
+import ScrollReveal, {
+  ScrollRevealStagger,
+  ScrollRevealItem,
+} from "./scroll-reveal";
 
 interface FAQSectionProps {
   isActive: boolean;
@@ -14,16 +18,21 @@ export default function FAQSection({ isActive }: FAQSectionProps) {
 
   return (
     <section id="faq" className={`${isActive ? "block" : "hidden"}`}>
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-primary mb-6">
-          Preguntas Frecuentes
-        </h2>
-        <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-          Resolvemos las dudas más comunes sobre nuestros servicios y procesos
-        </p>
-      </div>
+      <ScrollReveal variant="fadeInUp" delay={0.1}>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-transparent mb-6">
+            Preguntas Frecuentes
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Resolvemos las dudas más comunes sobre nuestros servicios y procesos
+          </p>
+        </div>
+      </ScrollReveal>
 
-      <div className="max-w-4xl mx-auto space-y-6">
+      <ScrollRevealStagger
+        staggerDelay={0.1}
+        className="max-w-4xl mx-auto space-y-6"
+      >
         {[
           {
             question: "¿Cuánto tiempo toma desarrollar un proyecto?",
@@ -66,31 +75,42 @@ export default function FAQSection({ isActive }: FAQSectionProps) {
               "La seguridad es nuestra prioridad. Implementamos encriptación de datos, autenticación segura, copias de seguridad automáticas y cumplimos con estándares internacionales como GDPR y mejores prácticas de ciberseguridad.",
           },
         ].map((faq, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-md">
-            <details className="group">
-              <summary className="flex justify-between items-center p-6 cursor-pointer">
-                <h3 className="text-lg font-semibold">{faq.question}</h3>
-                <ChevronDown className="w-5 h-5 text-primary group-open:rotate-180 transition-transform" />
-              </summary>
-              <div className="px-6 pb-6">
-                <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
-              </div>
-            </details>
-          </div>
+          <ScrollRevealItem key={index} variant="fadeInUp">
+            <div
+              key={index}
+              className="bg-card rounded-lg border border-border hover:border-primary/50 transition-colors"
+            >
+              <details className="group">
+                <summary className="flex justify-between items-center p-6 cursor-pointer">
+                  <h3 className="text-lg font-semibold text-foreground">
+                    {faq.question}
+                  </h3>
+                  <ChevronDown className="w-5 h-5 text-primary group-open:rotate-180 transition-transform" />
+                </summary>
+                <div className="px-6 pb-6">
+                  <p className="text-muted-foreground leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              </details>
+            </div>
+          </ScrollRevealItem>
         ))}
-      </div>
+      </ScrollRevealStagger>
 
-      <div className="text-center mt-12">
-        <p className="text-lg text-gray-700 mb-4">
-          ¿No encontraste la respuesta que buscabas?
-        </p>
-        <button
-          onClick={() => scrollToSection("contacto")}
-          className="bg-secondary text-secondary-foreground px-8 py-3 rounded-lg hover:bg-secondary/90 transition font-bold"
-        >
-          Contáctanos Directamente
-        </button>
-      </div>
+      <ScrollReveal variant="fadeInUp" delay={0.3}>
+        <div className="text-center mt-12">
+          <p className="text-lg text-muted-foreground mb-4">
+            ¿No encontraste la respuesta que buscabas?
+          </p>
+          <button
+            onClick={() => scrollToSection("contacto")}
+            className="bg-primary text-primary-foreground px-8 py-3 rounded-lg hover:bg-primary/90 transition font-bold shadow-lg shadow-primary/20"
+          >
+            Contáctanos Directamente
+          </button>
+        </div>
+      </ScrollReveal>
     </section>
   );
 }

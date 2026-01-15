@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import ScrollReveal from "./scroll-reveal";
 
 interface ContactSectionProps {
   isActive: boolean;
@@ -11,16 +12,20 @@ export default function ContactSection({
 }: ContactSectionProps) {
   return (
     <section id="contacto" className={`${isActive ? "block" : "hidden"}`}>
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-primary mb-6">Contáctanos</h2>
-        <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-          ¿Listo para transformar tu negocio? Conversemos sobre tu próximo
-          proyecto
-        </p>
-      </div>
+      <ScrollReveal variant="fadeInUp" delay={0.1}>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold bg-gradient-blue bg-clip-text text-transparent mb-6">
+            Contáctanos
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            ¿Listo para transformar tu negocio? Conversemos sobre tu próximo
+            proyecto
+          </p>
+        </div>
+      </ScrollReveal>
 
       <div className="grid md:grid-cols-2 gap-12">
-        <div>
+        <ScrollReveal variant="fadeInLeft" delay={0.2}>
           <h3 className="text-2xl font-bold mb-6">Información de Contacto</h3>
           <div className="space-y-6">
             <div className="flex items-start gap-4">
@@ -46,9 +51,9 @@ export default function ContactSection({
                 </svg>
               </div>
               <div>
-                <h4 className="font-semibold">Dirección</h4>
-                <p className="text-gray-600">Táchira, Venezuela</p>
-                <p className="text-gray-600">
+                <h4 className="font-semibold text-foreground">Dirección</h4>
+                <p className="text-muted-foreground">Táchira, Venezuela</p>
+                <p className="text-muted-foreground">
                   Disponible para proyectos remotos
                 </p>
               </div>
@@ -70,8 +75,8 @@ export default function ContactSection({
                 </svg>
               </div>
               <div>
-                <h4 className="font-semibold">Email</h4>
-                <p className="text-gray-600">infocodram@gmail.com</p>
+                <h4 className="font-semibold text-foreground">Email</h4>
+                <p className="text-muted-foreground">infocodram@gmail.com</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -109,17 +114,17 @@ export default function ContactSection({
               </p>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
-        <div>
+        <ScrollReveal variant="fadeInRight" delay={0.2}>
           <form
             onSubmit={handleSubmit}
-            className="bg-white p-8 rounded-xl shadow-lg space-y-6"
+            className="bg-card p-8 rounded-xl border border-border space-y-6"
           >
             <div>
               <label
                 htmlFor="nombre"
-                className="block mb-2 font-semibold text-gray-700"
+                className="block mb-2 font-semibold text-foreground"
               >
                 Nombre Completo *
               </label>
@@ -128,7 +133,7 @@ export default function ContactSection({
                 id="nombre"
                 name="nombre"
                 required
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition"
+                className="w-full bg-background border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
                 placeholder="Tu nombre completo"
               />
             </div>
@@ -144,7 +149,7 @@ export default function ContactSection({
                 id="email"
                 name="email"
                 required
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition"
+                className="w-full bg-background border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
                 placeholder="tu@email.com"
               />
             </div>
@@ -208,7 +213,7 @@ export default function ContactSection({
               <ArrowRight className="w-5 h-5" />
             </button>
           </form>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );
