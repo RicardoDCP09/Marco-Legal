@@ -20,6 +20,7 @@ import Footer from "./components/Footer";
 import SuccessModal from "./components/SuccessModal";
 import Chatbot from "./components/chatbot";
 import PageHeader from "./components/PageHeader";
+import LatestPostsSection from "./components/LatestPostsSection";
 
 // Helper to get header info
 const getSectionInfo = (section: string) => {
@@ -122,7 +123,7 @@ export default function CodeRAMPage() {
     };
 
     try {
-      await fetch("http://localhost:3001/proposals", {
+      await fetch("/api/proposals", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -151,12 +152,11 @@ export default function CodeRAMPage() {
     <div className="bg-background text-foreground font-sans min-h-screen">
       <Chatbot />
       <Navigation showSection={showSection} activeSection={activeSection} />
-
       {/* Hero Section - Acts as Home Page */}
       <div className={activeSection === "inicio" ? "block" : "hidden"}>
         <HeroSection scrollToSection={scrollToSection} />
+        <LatestPostsSection />
       </div>
-
       {/* Mini Hero (PageHeader) for other sections */}
       {activeSection !== "inicio" && (
         <PageHeader
@@ -165,7 +165,6 @@ export default function CodeRAMPage() {
           breadcrumbs={sectionInfo.breadcrumbs as any}
         />
       )}
-
       <main className="max-w-6xl mx-auto px-4 py-16 space-y-24">
         <AboutSection isActive={activeSection === "sobre"} />
         <MissionVisionSection isActive={activeSection === "mision"} />
@@ -181,7 +180,6 @@ export default function CodeRAMPage() {
           handleSubmit={handleSubmit}
         />
       </main>
-
       <Footer />
       <SuccessModal
         isOpen={isModalOpen}

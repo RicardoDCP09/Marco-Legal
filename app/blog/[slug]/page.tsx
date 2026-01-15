@@ -35,7 +35,7 @@ export default function BlogPostPage() {
 
   const fetchPost = async () => {
     try {
-      const res = await fetch(`http://localhost:3001/posts/${slug}`);
+      const res = await fetch(`/api/posts/${slug}`);
       if (!res.ok) {
         if (res.status === 404) {
           router.push("/blog"); // Or 404 page

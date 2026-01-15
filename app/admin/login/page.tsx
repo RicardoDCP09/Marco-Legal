@@ -15,9 +15,7 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await fetch(
-        `http://localhost:3001/users?email=${email}&password=${password}`
-      );
+      const res = await fetch(`/api/users?email=${email}&password=${password}`);
       const users = await res.json();
 
       if (users.length > 0) {

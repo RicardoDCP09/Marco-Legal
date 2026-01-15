@@ -89,9 +89,7 @@ export default function DashboardPage() {
 
   const fetchProposals = async () => {
     try {
-      const res = await fetch(
-        "http://localhost:3001/proposals?_sort=date&_order=desc"
-      );
+      const res = await fetch("/api/proposals?_sort=date&_order=desc");
       const data = await res.json();
       setProposals(data);
     } catch (error) {
@@ -106,7 +104,7 @@ export default function DashboardPage() {
     status: "accepted" | "rejected" | "pending"
   ) => {
     try {
-      await fetch(`http://localhost:3001/proposals/${id}`, {
+      await fetch(`/api/proposals/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
@@ -120,7 +118,7 @@ export default function DashboardPage() {
   const handleReply = async (id: string) => {
     if (!replyText.trim()) return;
     try {
-      await fetch(`http://localhost:3001/proposals/${id}`, {
+      await fetch(`/api/proposals/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

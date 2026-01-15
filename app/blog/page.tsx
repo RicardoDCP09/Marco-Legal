@@ -32,7 +32,7 @@ export default function BlogListingPage() {
 
   const fetchPosts = async () => {
     try {
-      const res = await fetch("http://localhost:3001/posts?published=true");
+      const res = await fetch("/api/posts?published=true");
       if (res.ok) {
         const data = await res.json();
         setPosts(data);

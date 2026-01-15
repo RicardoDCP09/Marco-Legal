@@ -23,8 +23,8 @@ export default function MissionVisionSection({
 
   useEffect(() => {
     Promise.all([
-      fetch("http://localhost:3001/content/2").then((res) => res.json()),
-      fetch("http://localhost:3001/content/3").then((res) => res.json()),
+      fetch("/api/content/2").then((res) => res.json()),
+      fetch("/api/content/3").then((res) => res.json()),
     ])
       .then(([missionData, visionData]) => {
         setMission(missionData);

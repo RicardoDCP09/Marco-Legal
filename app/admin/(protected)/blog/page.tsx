@@ -48,7 +48,7 @@ export default function BlogAdminPage() {
 
   const fetchPosts = async () => {
     try {
-      const res = await fetch("http://localhost:3001/posts");
+      const res = await fetch("/api/posts");
       const data = await res.json();
       setPosts(data);
     } catch (error) {
@@ -61,7 +61,7 @@ export default function BlogAdminPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("¿Estás seguro de eliminar este artículo?")) return;
     try {
-      await fetch(`http://localhost:3001/posts/${id}`, {
+      await fetch(`/api/posts/${id}`, {
         method: "DELETE",
       });
       setPosts(posts.filter((p) => p.id !== id));
@@ -74,7 +74,7 @@ export default function BlogAdminPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const res = await fetch("http://localhost:3001/posts", {
+      const res = await fetch("/api/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -99,7 +99,7 @@ export default function BlogAdminPage() {
   const togglePublish = async (post: Post) => {
     try {
       const updatedPost = { ...post, published: !post.published };
-      await fetch(`http://localhost:3001/posts/${post.id}`, {
+      await fetch(`/api/posts/${post.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ published: updatedPost.published }),

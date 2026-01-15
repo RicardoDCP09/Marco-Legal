@@ -17,7 +17,7 @@ export default function AboutSection({ isActive }: AboutSectionProps) {
   });
 
   useEffect(() => {
-    fetch("http://localhost:3001/content/1")
+    fetch("/api/content/1")
       .then((res) => res.json())
       .then((data) => setContent(data))
       .catch((err) => console.error("Error fetching about content:", err));

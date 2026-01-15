@@ -27,7 +27,7 @@ export default function CMSPage() {
 
   const fetchContent = async () => {
     try {
-      const res = await fetch("http://localhost:3001/content");
+      const res = await fetch("/api/content");
       const data = await res.json();
       setContent(data);
     } catch (error) {
@@ -40,7 +40,7 @@ export default function CMSPage() {
   const handleSave = async (item: ContentItem) => {
     setSaving(item.id);
     try {
-      await fetch(`http://localhost:3001/content/${item.id}`, {
+      await fetch(`/api/content/${item.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(item),
